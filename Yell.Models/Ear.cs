@@ -2,6 +2,6 @@
 {
     public class Ear
     {
-        public decimal EaringDistance { get; set; }
+        public decimal MinSoundLevel { get; set; } // in Db
     }
 }

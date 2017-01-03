@@ -2,7 +2,7 @@
 
 namespace Yell.Models
 {
-    public static class Distances
+    public static class Geographics
     {
         /// <summary>
         /// Calculates grand circle haversine distance

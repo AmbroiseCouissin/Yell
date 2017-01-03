@@ -5,7 +5,7 @@ namespace Yell.Models
     public static class Acoustics
     {
         /// <summary>
-        /// Converts intesity from W/m² to dB
+        /// Converts intensity from W/m² to dB
         /// </summary>
         /// <param name="intensity"></param>
         /// <returns></returns>

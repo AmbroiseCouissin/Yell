@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Yell.Models
 {
     public class User
     {
         public string Id { get; set; }
+        public string WorldId { get; set; }
         public string UserName { get; set; }
         public Tuple<double, double> Position { get; set; }  // Latitude, Longitude
 
@@ -17,14 +19,15 @@ namespace Yell.Models
         /// Sends a message
         /// </summary>
         /// <param name="content"></param>
-        /// <param name="power"></param>
+        /// <param name="powerPerCharacter"></param>
         /// <returns></returns>
-        public Message Yell(string content, decimal power)
+        public Message Yell(string content, decimal powerPerCharacter)
         {
             decimal currentPower = CalculateCurrentVoicePower();
+            decimal power = content.Length * powerPerCharacter;
             var message = new Message
             {
-                Id = new Guid().ToString(),
+                Id = Guid.NewGuid().ToString(),
                 UserId = Id,
                 Power = currentPower - power >= 0? power : currentPower,
                 Position = Position,
@@ -44,7 +47,7 @@ namespace Yell.Models
         /// <param name="message"></param>
         public void Hear(Message message)
         {
-            double distance = Distances.CalculateHaversine(Position, message.Position);
+            double distance = Geographics.CalculateHaversine(Position, message.Position);
             double intensity = ((double)message.Power / (4 * Math.PI * Math.Pow(distance, 2))).ToDb();
 
             if (intensity >= (double)Ear.MinSoundLevel)
